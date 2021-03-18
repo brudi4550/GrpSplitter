@@ -37,6 +37,7 @@ public class Client {
         rootPanel.add(scroll, BorderLayout.CENTER);
         JButton button = new JButton("Choose Folder");
         button.addActionListener(e -> {
+            model.setFolder(null);
             fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             fc.setAcceptAllFileFilterUsed(false);
             int ret = fc.showOpenDialog(frame);

@@ -15,17 +15,21 @@ public class Model {
     private File folder;
     private List<Path> files;
     private int entries = 0;
-    private final List<List<Path>> grps = new ArrayList<>();
+    private List<List<Path>> grps = new ArrayList<>();
 
     public void setFolder(File folder) {
         this.folder = folder;
-        System.out.println(folder);
+        if (folder == null) {
+            files = null;
+            grps = new ArrayList<>();
+            return;
+        }
         loadFiles();
     }
 
     private void loadFiles() {
         try (Stream<Path> paths = Files.walk(folder.toPath())) {
-            files = paths.filter(Files::isRegularFile).filter(i -> i.getFileName().toString().endsWith("zip")).collect(Collectors.toList());
+            files = paths.filter(Files::isRegularFile).collect(Collectors.toList());
             entries = files.size();
             files.sort(Comparator.naturalOrder());
         } catch (IOException e) {
