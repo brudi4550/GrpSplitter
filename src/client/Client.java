@@ -1,11 +1,12 @@
 package client;
 
-import model.Model;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -86,11 +87,12 @@ public class Client {
         List<List<Path>> files = model.getFiles();
         int i = 1;
         if (nrs == null) {
-            for (List<Path> file : files) {
+            for (List<Path> group : files) {
                 textArea.append("Gruppe " + i + " :\n");
                 i++;
-                for (Path path : file) {
-                    textArea.append(path.toFile().getName() + "\n");
+                for (Path path : group) {
+                    File file = path.toFile();
+                    textArea.append(file.getParentFile().getName()+file.getName() + "\n");
                 }
             }
         } else {
@@ -98,7 +100,8 @@ public class Client {
                 List<Path> curr = files.get(nr-1);
                 textArea.append("Gruppe " + nr + " :\n");
                 for (Path path : curr) {
-                    textArea.append(path.toFile().getName()+"\n");
+                    File file = path.toFile();
+                    textArea.append(file.getParentFile().getName()+file.getName() + "\n");
                 }
             }
         }
